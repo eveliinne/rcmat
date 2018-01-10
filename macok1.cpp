@@ -9,6 +9,7 @@ class WrongDim {};
 
 // po to jest klasa w klasie zeby byla mozliwosc uzywania referencji w programie
 
+
 class Matrix
 {
     struct matrix;
