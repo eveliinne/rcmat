@@ -6,6 +6,7 @@ using namespace std;
 class IndexOutOfRange {};
 class WrongDim {};
 
+// tu jest teraz cos innego
 // cos tam
 // po to jest klasa w klasie zeby byla mozliwosc uzywania referencji w programie
 // struktura to klasa publiczna
@@ -39,8 +40,8 @@ struct Matrix::matrix
     int columns;
     int odwolanie;      //licznik odwolan
     
-    // Konstruktor kopiuj¹cy jest u¿ywany do stworzenia nowego obiektu.
-	// Jest prostszy od operatora przypisania - nie musi sprawdzaæ przypisania do samego siebie i zwalniaæ poprzedniej zawartoœci.
+    // Konstruktor kopiujÄ…cy jest uÅ¼ywany do stworzenia nowego obiektu.
+	// Jest prostszy od operatora przypisania - nie musi sprawdzaÄ‡ przypisania do samego siebie i zwalniaÄ‡ poprzedniej zawartoÅ›ci.
 
     matrix(int r, int c, double diag, double fill = 0) // konstruktor tak jakby wewnetrzny 
     {
@@ -148,7 +149,7 @@ struct Matrix::matrix
 }
 
 class Matrix::Cref // klasa Cref umozliwia rozroznianie czytania i pisania
-//Przeci¹¿enie - istnienie wielu definicji tej samej nazwy
+//PrzeciÄ…Å¼enie - istnienie wielu definicji tej samej nazwy
 {
 	friend class Matrix;
 	Matrix& s;
