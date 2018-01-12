@@ -6,7 +6,7 @@ using namespace std;
 class IndexOutOfRange {};
 class WrongDim {};
 
-
+// cos tam
 // po to jest klasa w klasie zeby byla mozliwosc uzywania referencji w programie
 // struktura to klasa publiczna
 
