@@ -7,7 +7,9 @@ class IndexOutOfRange {};
 class WrongDim {};
 
 // tu jest teraz cos innego
+// cos tam
 // po to jest klasa w klasie zeby byla mozliwosc uzywania referencji w programie
+// struktura to klasa publiczna
 
 class Matrix
 {
@@ -37,6 +39,9 @@ struct Matrix::matrix
     int rows;
     int columns;
     int odwolanie;      //licznik odwolan
+    
+    // Konstruktor kopiujący jest używany do stworzenia nowego obiektu.
+	// Jest prostszy od operatora przypisania - nie musi sprawdzać przypisania do samego siebie i zwalniać poprzedniej zawartości.
 
     matrix(int r, int c, double diag, double fill = 0) // konstruktor tak jakby wewnetrzny 
     {
@@ -91,12 +96,12 @@ struct Matrix::matrix
         delete [] data;
     };
 
-    matrix* detach() //detach sprawdza czy licznik odwolan jest rowny 1 jesli tak to  nie ma potrzeba alokowac nowej pamieci bo tylko ten obiekt korzysta z tego obszaru pamieci
+    matrix* detach() //detach sprawdza czy licznik odwolan jest rowny 1, jesli tak to  nie ma potrzeba alokowac nowej pamieci bo tylko ten obiekt korzysta z tego obszaru pamieci
     {
         if(odwolanie == 1)
             return this;
         matrix* t = new matrix(rows, columns, data); // tworzy nowy wskaznik, do ktorego przypisywany jest nowy obiekt-struktura
-        odwolanie--; //zmienijsz licznik odwolan bo ten obiekt juz nie bedzie korzystac z tego obszaru pamieci 
+        odwolanie--; //zmniejsz licznik odwolan bo ten obiekt juz nie bedzie korzystac z tego obszaru pamieci 
         return t;
     };
 
@@ -133,7 +138,7 @@ struct Matrix::matrix
 }; 
 
 /*inline*/ void Matrix::write(double nr, int rows, int columns)
-{//cout << "void operator = (double number)"<<endl;
+{cout << "void operator = (double number)"<<endl;
 	mat = mat->detach(); // sa jakies wskazniki do obiektu i jesli modyfikujemy ktorys z nich, to tworzy sie nowy obiekt zeby nie modyfikowac tamtych pozostalych 
 	mat->data[rows][columns] = nr;
 }
@@ -144,6 +149,7 @@ struct Matrix::matrix
 }
 
 class Matrix::Cref // klasa Cref umozliwia rozroznianie czytania i pisania
+//Przeciążenie - istnienie wielu definicji tej samej nazwy
 {
 	friend class Matrix;
 	Matrix& s;
@@ -154,12 +160,12 @@ class Matrix::Cref // klasa Cref umozliwia rozroznianie czytania i pisania
 public:
 	operator double() const // po prostu czyta
 	{	
-		// cout << "operator double() const"<<endl;
+		cout << "operator double() const"<<endl;
 		return s.read(rows, col); // 
 	}
 	Matrix::Cref& operator= (double number) // operator przypisania dwoch wartosci
 	{
-		//cout << "void operator = (double number)"<<endl;
+		cout << "void operator = (double number)"<<endl;
 		s.write(number, rows, col);
 		return *this;
 	}		
@@ -185,6 +191,7 @@ a jak jest np. matrix B;
 }
 
 //Wczytanie z pliku
+// odwoluje sie do mojej glownej klasy::konstruktor matrix 
 Matrix::Matrix(fstream& f)
 {
     int r;
@@ -216,18 +223,19 @@ Matrix::Matrix(fstream& f)
     delete [] tmp;
 }
 
-Matrix::Matrix(int r, int c, double w1, double w2) // konstruktr (tworzy nowy obiekt), ten glowny
+Matrix::Matrix(int r, int c, double w1, double w2) // konstruktor (tworzy nowy obiekt), ten glowny
 {
     mat = new matrix(r, c, w1, w2);
 }
 
-Matrix::Matrix(const Matrix& x) // nie tworze niczego nowego / obie macierze beda wskazywaly na to samo, 
+Matrix::Matrix(const Matrix& x) // nie tworze niczego nowego / obie macierze beda wskazywaly na to samo
+// on tylko "kopiuje" (przypisanie wskaznika), wiec dane bylyby te same; zmienia sie tylko odwolanie no i jest przypisanie tego wskaznika wlasnie
 {
     x.mat->odwolanie++;
     mat = x.mat; // przekazuje wskaznik na cala jego strukture
 }
 
-Matrix::~Matrix()
+Matrix::~Matrix() // destruktor klasy
 {
     if(--(mat->odwolanie) == 0)
         delete mat;
@@ -237,7 +245,7 @@ Matrix::~Matrix()
 //operator *
 Matrix Matrix::operator*(const Matrix& x) const
 {
-    if(mat->columns != x.mat->rows)	// Wyjatek
+    if(mat->columns != x.mat->rows)	// Wyjatek ?????????????
         throw WrongDim();
 
     //czysta macierz z zerami
