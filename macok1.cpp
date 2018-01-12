@@ -6,7 +6,7 @@ using namespace std;
 class IndexOutOfRange {};
 class WrongDim {};
 
-
+// tu jest teraz cos innego
 // po to jest klasa w klasie zeby byla mozliwosc uzywania referencji w programie
 
 class Matrix
