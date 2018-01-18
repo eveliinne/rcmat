@@ -4,6 +4,7 @@
 #include "stack.h"
 
 using namespace std;
+// ewegwergerg
 
 stack::stack()
 {
