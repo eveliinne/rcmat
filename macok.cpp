@@ -7,8 +7,6 @@ class IndexOutOfRange {};
 class WrongDim {};
 
 
-
-
 class Matrix
 {
     struct matrix;
