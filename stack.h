@@ -19,5 +19,5 @@ private:
 // kolejne
 
 // blabla
-// XDDDDDD
+// XDDDD
 
